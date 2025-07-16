@@ -17,9 +17,7 @@ const init = () => {
       fs.mkdirSync("./bot_sessions/", { recursive: true });
     }
 
-    if (!fs.existsSync(`${botSessionPath}/qr.txt`)) {
-      fs.writeFileSync(`${botSessionPath}/qr.txt`, qr);
-    }
+    fs.writeFileSync(`${botSessionPath}/qr.txt`, qr);
 
     console.log("NEW QR CODE:", qr);
   });
@@ -36,10 +34,9 @@ const init = () => {
 
     console.log(phone_name);
     console.log(message.body);
-    // logic: if [id_pickup] pickup
-    // logic: if [id_pickup] done
-    // logic: if send image with caption [id_pickup] done
-    // logic: if reply image with caption [id_pickup] done
+
+    // receive message here
+    // do something with process.env.BACKEND_URL
   });
 };
 init();

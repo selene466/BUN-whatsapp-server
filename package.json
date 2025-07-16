@@ -1,6 +1,6 @@
 {
-  "name": "kfdelivery",
-  "module": "index.ts",
+  "name": "whatsapp-server",
+  "module": "server.ts",
   "type": "module",
   "private": true,
   "devDependencies": {
@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@bot-wa/bot-wa-baileys": "1.1.5",
+    "@types/qrcode": "^1.5.5",
     "axios": "1.2.2",
     "node-cache": "^5.1.2",
+    "qrcode": "^1.5.4",
     "sharp": "^0.33.5"
   },
   "trustedDependencies": [
