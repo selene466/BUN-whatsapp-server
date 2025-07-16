@@ -38,7 +38,7 @@ curl -X GET http://localhost:4140/api/status
 Send message:
 
 ```sh
-curl -X GET
+curl -X GET \
 http://localhost:4140/api/send?phone_number=6285100001234&message=Hello%20World
 ```
 
