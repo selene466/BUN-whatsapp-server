@@ -1,16 +1,33 @@
 import { BaileysClass } from "@bot-wa/bot-wa-baileys";
 import axios from "axios";
+import fs from "fs";
 
 axios.defaults.validateStatus = (status) => status >= 200 && status <= 500;
 
 const botBaileys = new BaileysClass({});
 
-function init() {
+const botSessionPath = "./bot_sessions";
+
+const init = () => {
   botBaileys.on("auth_failure", async (error) =>
     console.log("ERROR BOT: ", error),
   );
-  botBaileys.on("qr", (qr) => console.log("NEW QR CODE: ", qr));
-  botBaileys.on("ready", async () => console.log("READY BOT"));
+  botBaileys.on("qr", (qr) => {
+    if (!fs.existsSync(botSessionPath)) {
+      fs.mkdirSync("./bot_sessions/", { recursive: true });
+    }
+
+    if (!fs.existsSync(`${botSessionPath}/qr.txt`)) {
+      fs.writeFileSync(`${botSessionPath}/qr.txt`, qr);
+    }
+
+    console.log("NEW QR CODE:", qr);
+  });
+  botBaileys.on("ready", async () => {
+    fs.writeFileSync(`${botSessionPath}/qr.txt`, "");
+
+    console.log("READY BOT");
+  });
 
   botBaileys.on("message", async (message) => {
     const phone_number = message.from.split("@")[0];
@@ -24,9 +41,13 @@ function init() {
     // logic: if send image with caption [id_pickup] done
     // logic: if reply image with caption [id_pickup] done
   });
-}
+};
 init();
 
-export const sendWa = async (phone: string, message: string) => {
+export const sendMessage = async (phone: string, message: string) => {
   await botBaileys.sendText(phone, message);
+};
+
+export const botRestart = () => {
+  botBaileys.clearSessionAndRestart();
 };
