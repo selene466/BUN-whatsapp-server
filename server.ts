@@ -57,6 +57,27 @@ Bun.serve({
       },
     },
 
+    "/api/get-qr-image-file": {
+      GET: async () => {
+        try {
+          const qr = fs.readFileSync("./bot_sessions/qr.txt", "utf8");
+          await QRCode.toFile("./bot_sessions/qr.png", qr);
+
+          const qrImage = fs.readFileSync("./bot_sessions/qr.png");
+
+          return new Response(qrImage as unknown as Uint8Array, {
+            status: 200,
+            headers: {
+              "Content-Type": "image/png",
+            },
+          });
+        } catch (error) {
+          console.log("Failed to read QR");
+          return Response.json({ status: "Error" });
+        }
+      },
+    },
+
     "/api/restart": {
       GET: async () => {
         botRestart();
