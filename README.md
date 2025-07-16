@@ -54,6 +54,12 @@ Get login QR image data URL:
 curl -X GET http://localhost:4140/api/get-qr-image
 ```
 
+Get login QR image PNG:
+
+```sh
+curl -X GET http://localhost:4140/api/get-qr-image-file
+```
+
 ## Incoming Message Handler
 
 Add your own handler in `whatsapp.ts`.
