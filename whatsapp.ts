@@ -35,7 +35,7 @@ const init = () => {
     console.log(phone_name);
     console.log(message.body);
 
-    // receive message here
+    // received message here
     // do something with process.env.BACKEND_URL
   });
 };
